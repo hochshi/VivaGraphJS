@@ -2735,30 +2735,25 @@ module.exports = createPausableLayout;
 
 function createPausableLayout(graph, physicsSettings){
 
-    var forceDirectedPause = function(graph, physicsSettings){
-        var api = Viva.Graph.Layout.forceDirected.apply(this, arguments);
-        var stepFunction = function() {
-            return api.simulator.step();
-        };
-        api.pause = function() {
-            api.step = function() {
-                return;
-            };
-        };
-        api.resume = function() {
-            api.step = stepFunction
-        };
-        api.resume();
-        return api;
+    var forceDirected = require('ngraph.forcelayout');
+    var api = forceDirected(graph, physicsSettings);
+    var stepFunction = function() {
+        return api.simulator.step();
     };
-    forceDirectedPause.prototype = Object.create(Viva.Graph.Layout.forceDirected.prototype);
-    forceDirectedPause.prototype.constructor = forceDirectedPause;
 
-    Viva.Graph.Layout.forceDirectedPause = forceDirectedPause;
+    api.pause = function() {
+        api.step = function() {
+            return;
+        };
+    };
+    api.resume = function() {
+        api.step = stepFunction
+    };
+    api.resume();
+    return api;
 
-    return forceDirectedPause;
 };
-},{}],26:[function(require,module,exports){
+},{"ngraph.forcelayout":7}],26:[function(require,module,exports){
 module.exports = {
   random: random,
   randomIterator: randomIterator

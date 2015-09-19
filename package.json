@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/anvaka/VivaGraphJS.git"
+    "url": "https://github.com/hochshi/VivaGraphJS.git"
   },
   "keywords": [
     "graph"
